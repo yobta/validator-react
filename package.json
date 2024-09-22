@@ -1,6 +1,6 @@
 {
   "name": "@yobta/validator-react",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Reacct hooks for @yobta/validator",
   "keywords": [
     "validator",
