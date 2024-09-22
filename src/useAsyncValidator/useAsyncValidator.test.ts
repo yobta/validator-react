@@ -38,3 +38,28 @@ test('promise resolve', async () => {
   })
   expect(result.current[1]).toBe(false)
 })
+
+test('deps', async () => {
+  let deps = [1, 2, 3]
+
+  let validator = createAsyncValidator(rule(() => null))
+
+  const hook = renderHook(() => useAsyncValidator(validator, deps))
+  const result1 = hook.result.current
+
+  validator = createAsyncValidator(rule(() => null))
+
+  hook.rerender()
+
+  const result2 = hook.result.current
+
+  expect(result2).toEqual(result1)
+
+  deps = [1, 2, 4]
+
+  hook.rerender()
+
+  const result3 = hook.result.current
+
+  expect(result3).not.toEqual(result1)
+})

@@ -78,14 +78,14 @@
       "import": {
         "lib/index.js": "{ useAsyncValidator }"
       },
-      "limit": "2648 B"
+      "limit": "2644 B"
     },
     {
       "name": "*",
       "import": {
         "lib/index.js": "*"
       },
-      "limit": "2687 B"
+      "limit": "2691 B"
     }
   ],
   "dependencies": {
