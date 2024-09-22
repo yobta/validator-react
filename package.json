@@ -9,7 +9,7 @@
     "query"
   ],
   "scripts": {
-    "build": "tsc --build tsconfig.build.json",
+    "build": "tsc --build",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "size-limit": "size-limit",
