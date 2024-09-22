@@ -30,6 +30,7 @@ bump:
 	npm version patch
 	git add .
 	git push
+	git push origin --tags
 
 publish: check bump
 	npm publish
