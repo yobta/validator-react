@@ -12,11 +12,13 @@ type Validator<Data> = (event: unknown) => YobtaAsyncValidatorResult<Data>
  *
  * @template Data - The type of data returned by the validator.
  * @param {YobtaAsyncValidator<unknown, Data>} validator - The asynchronous validator function.
+ * @param {(...result: Awaited<YobtaAsyncValidatorResult<Data>>) => void} callback - The callback function to be called with the result of the validation.
  * @param {DependencyList} [deps=[validator]] - The dependency list for the validator function.
  * @returns {[Validator<Data>, boolean]} A tuple containing the validate function and a boolean indicating if validation is in progress.
  */
 export const useAsyncValidator = <Data>(
   validator: YobtaAsyncValidator<unknown, Data>,
+  callback: (...result: Awaited<YobtaAsyncValidatorResult<Data>>) => void,
   deps: DependencyList = [validator],
 ): [Validator<Data>, boolean] => {
   const [busy, setBusy] = useState(false)
@@ -24,7 +26,9 @@ export const useAsyncValidator = <Data>(
   const validate: Validator<Data> = useCallback(async (event: unknown) => {
     setBusy(true)
     try {
-      return await validator(event)
+      const result = await validator(event)
+      callback(...result)
+      return result
     } finally {
       setBusy(false)
     }

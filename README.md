@@ -4,7 +4,7 @@ React hooks for [@yobta/validator](https://github.com/yobta/validator)
 
 ## Installation
 
-```
+```sh
 npm i @yobta/validator
 npm i @yobta/validator-react
 ```
@@ -25,7 +25,7 @@ const validator = createAsyncValidator(rule(async value => somePromise(value)))
 By default, the hook caches the validate function based on the validator provided. This means that unless the validator changes, the same validate function instance is used, optimizing performance by preventing unnecessary re-creations.
 
 ```ts
-const [validate, isValidating] = useAsyncValidator(validator)
+const [validate, isValidating] = useAsyncValidator(validator, conosle.log)
 ```
 
 #### Cache Control with Dependencies
@@ -33,5 +33,5 @@ const [validate, isValidating] = useAsyncValidator(validator)
 By providing a dependency list, you can control when the validate function is recreated. This is useful for optimizing performance and ensuring that the validator only updates when specific dependencies change.
 
 ```ts
-const [validate, isValidating] = useAsyncValidator(validator, [dep1, dep2])
+const [validate, isValidating] = useAsyncValidator(validator, conosle.log, [dep1, dep2])
 ```
