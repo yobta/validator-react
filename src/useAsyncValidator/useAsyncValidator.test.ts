@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals'
 import { act, renderHook } from '@testing-library/react'
 import { createAsyncValidator, rule } from '@yobta/validator'
 
@@ -5,7 +6,8 @@ import { useAsyncValidator } from './useAsyncValidator.js'
 
 test('return value', () => {
   const validator = createAsyncValidator(rule(() => {}))
-  const { result } = renderHook(() => useAsyncValidator(validator))
+  const callback = jest.fn()
+  const { result } = renderHook(() => useAsyncValidator(validator, callback))
   const [validate, busy] = result.current
 
   expect(typeof validate).toBe('function')
@@ -14,6 +16,8 @@ test('return value', () => {
 
 test('promise resolve', async () => {
   let resolvePromise: (value: unknown) => void
+  const callback = jest.fn()
+
   const validator = createAsyncValidator(
     rule(
       () =>
@@ -23,7 +27,7 @@ test('promise resolve', async () => {
     ),
   )
 
-  const { result } = renderHook(() => useAsyncValidator(validator))
+  const { result } = renderHook(() => useAsyncValidator(validator, callback))
   const [validate] = result.current
 
   expect(result.current[1]).toBe(false)
@@ -37,14 +41,16 @@ test('promise resolve', async () => {
     resolvePromise({})
   })
   expect(result.current[1]).toBe(false)
+  expect(callback).toHaveBeenCalledWith({}, null)
 })
 
 test('deps', async () => {
   let deps = [1, 2, 3]
 
   let validator = createAsyncValidator(rule(() => null))
+  const callback = jest.fn()
 
-  const hook = renderHook(() => useAsyncValidator(validator, deps))
+  const hook = renderHook(() => useAsyncValidator(validator, callback, deps))
   const result1 = hook.result.current
 
   validator = createAsyncValidator(rule(() => null))
