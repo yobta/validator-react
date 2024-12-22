@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.4
+
+- Support for async callbacks
+
 ## 0.0.3
 
 - Added callback

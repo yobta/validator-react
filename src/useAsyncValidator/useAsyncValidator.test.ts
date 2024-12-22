@@ -6,7 +6,7 @@ import { useAsyncValidator } from './useAsyncValidator.js'
 
 test('return value', () => {
   const validator = createAsyncValidator(rule(() => {}))
-  const callback = jest.fn()
+  const callback = jest.fn() as any
   const { result } = renderHook(() => useAsyncValidator(validator, callback))
   const [validate, busy] = result.current
 
@@ -16,7 +16,7 @@ test('return value', () => {
 
 test('promise resolve', async () => {
   let resolvePromise: (value: unknown) => void
-  const callback = jest.fn()
+  const callback = jest.fn() as any
 
   const validator = createAsyncValidator(
     rule(
@@ -48,7 +48,7 @@ test('deps', async () => {
   let deps = [1, 2, 3]
 
   let validator = createAsyncValidator(rule(() => null))
-  const callback = jest.fn()
+  const callback = jest.fn() as any
 
   const hook = renderHook(() => useAsyncValidator(validator, callback, deps))
   const result1 = hook.result.current
